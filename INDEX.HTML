@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mayavi</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0b1220;
+      color: white;
+    }
+
+    /* 🎬 HERO */
+    .hero {
+      position: relative;
+      height: 320px;
+      overflow: hidden;
+      transition: 0.4s;
+    }
+
+    .hero video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(2px) brightness(0.7);
+    }
+
+    /* 💎 OVERLAY */
+    .overlay {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      background: rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    /* ✨ ANIMATION */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 👤 PROFILE */
+    .profile {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+
+  object-fit: cover;   /* 🔥 ye main fix hai */
+  object-position: center; /* center se crop karega */
+
+  border: 3px solid white;
+  margin-bottom: 8px;
+  transition: 0.3s;
+}
+
+.profile:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(255,255,255,0.6);
+}
+
+    /* 🔥 BUTTONS */
+    .btn {
+      padding: 8px 16px;
+      margin: 4px;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(45deg, #ff00cc, #3333ff);
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.08);
+    }
+
+    /* 📏 SHRINK */
+    .hero.shrink {
+      height: 180px;
+    }
+
+    /* 📦 PORTFOLIO */
+    .portfolio {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .item {
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      transition: 0.4s;
+    }
+
+    .item:hover img {
+      transform: scale(1.1);
+      filter: brightness(0.7);
+    }
+
+    /* 🔥 INLINE POPUP (NEW SYSTEM) */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+
+      display: none;
+      justify-content: center;
+      align-items: center;
+
+      backdrop-filter: blur(12px);
+      background: rgba(0,0,0,0.7);
+      z-index: 999;
+    }
+
+    .popup img, .popup video {
+      max-width: 80%;
+      max-height: 80%;
+      border-radius: 15px;
+
+      box-shadow: 0 0 50px rgba(0,0,0,0.9);
+
+      transform: scale(0.7);
+      opacity: 0;
+      transition: 0.4s;
+    }
+
+    .popup.show img,
+    .popup.show video {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <video autoplay muted loop>
+      <source src="2024_10_15_14_05_45_IMG_1306.MP4">
+    </video>
+
+    <div class="overlay fade-in">
+      <img src="2025_11_07_20_45_01_IMG_0541.JPG" class="profile">
+      <h1>MAYAVI 😏</h1>
+      <p>Content Creator | AI Learner</p>
+
+      <div>
+        <button class="btn" onclick="about()">About</button>
+        <button class="btn" onclick="whatsapp()">WhatsApp</button>
+        <button class="btn" onclick="instagram()">Instagram</button>
+      </div>
+
+      <p id="msg"></p>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <div class="portfolio fade-in">
+    <h2>My Work 🔥</h2>
+
+    <div class="grid">
+      <div class="item" onclick="openPopup('2025_11_02_17_50_06_IMG_0260.jpg','img')">
+        <img src="2025_11_02_17_50_06_IMG_0260.jpg">
+      </div>
+
+      <div class="item" onclick="openPopup('2025_11_05_21_11_38_IMG_0454.jpg','img')">
+        <img src="2025_11_05_21_11_38_IMG_0454.jpg">
+      </div>
+
+      <div class="item" onclick="openPopup('2025_11_05_21_13_01_IMG_0456.jpg','img')">
+        <img src="2025_11_05_21_13_01_IMG_0456.jpg">
+      </div>
+
+      <div class="item" onclick="openPopup('2025_11_07_20_45_01_IMG_0541.jpg','img')">
+        <img src="2025_11_07_20_45_01_IMG_0541.jpg">
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔥 POPUP -->
+  <div class="popup" id="popup" onclick="closePopup()"></div>
+
+  <script>
+
+    function about() {
+      document.getElementById("msg").innerText =
+        "I create emotional content & edit videos.";
+    }
+
+    function whatsapp() {
+      window.location.href = "https://wa.me/91XXXXXXXXXX";
+    }
+
+    function instagram() {
+      window.location.href = "https://instagram.com/yourusername";
+    }
+
+    /* SHRINK */
+    window.addEventListener("scroll", function() {
+      let hero = document.querySelector(".hero");
+      if (window.scrollY > 50) hero.classList.add("shrink");
+      else hero.classList.remove("shrink");
+    });
+
+    /* POPUP SYSTEM */
+    function openPopup(src, type) {
+      let box = document.getElementById("popup");
+      box.style.display = "flex";
+
+      if(type === 'img') {
+        box.innerHTML = "<img src='" + src + "'>";
+      } else {
+        box.innerHTML = "<video src='" + src + "' controls autoplay></video>";
+      }
+
+      setTimeout(() => {
+        box.classList.add("show");
+      }, 10);
+    }
+
+    function closePopup() {
+      let box = document.getElementById("popup");
+      box.classList.remove("show");
+
+      setTimeout(() => {
+        box.style.display = "none";
+        box.innerHTML = "";
+      }, 300);
+    }
+
+  </script>
+
+</body>
+</html>
